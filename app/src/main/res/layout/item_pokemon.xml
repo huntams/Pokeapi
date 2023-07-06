@@ -7,8 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="2dp"
-    android:background="@color/black"
-    tools:context=".presentation.MainActivity">
+    android:background="@color/black">
 
 
     <ImageView

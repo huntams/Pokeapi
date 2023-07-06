@@ -7,15 +7,16 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.pokeapi.data.model.Pokemon
+import com.example.pokeapi.data.model.PokemonImages
 import com.example.pokeapi.data.remote.model.Sprites
 import com.example.pokeapi.databinding.ItemImagePokemonBinding
 import com.example.pokeapi.databinding.ItemPokemonBinding
 import javax.inject.Inject
 
-class PokemonImageAdapter @Inject constructor() : ListAdapter<Sprites, PokemonImageAdapter.DataViewHolder>(diffUtilCallback) {
+class PokemonImageAdapter @Inject constructor() : ListAdapter<PokemonImages, PokemonImageAdapter.DataViewHolder>(diffUtilCallback) {
 
-    private var onClick: (Sprites) -> Unit = {}
-    fun setCallback(callback: (Sprites) -> Unit) {
+    private var onClick: (PokemonImages) -> Unit = {}
+    fun setCallback(callback: (PokemonImages) -> Unit) {
         this.onClick = callback
     }
 
@@ -31,11 +32,10 @@ class PokemonImageAdapter @Inject constructor() : ListAdapter<Sprites, PokemonIm
     inner class DataViewHolder(
         private val binding: ItemImagePokemonBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Sprites) {
+        fun bind(item: PokemonImages) {
 
             with(binding) {
-
-                image.load(item.front_default)
+                image.load(item.url)
                 //closeAddImageView.setImageURI()
 
                 root.setOnClickListener {
@@ -49,13 +49,13 @@ class PokemonImageAdapter @Inject constructor() : ListAdapter<Sprites, PokemonIm
     }
 }
 
-private val diffUtilCallback = object : DiffUtil.ItemCallback<Sprites>() {
+private val diffUtilCallback = object : DiffUtil.ItemCallback<PokemonImages>() {
 
-    override fun areContentsTheSame(oldItem: Sprites, newItem: Sprites): Boolean {
+    override fun areContentsTheSame(oldItem: PokemonImages, newItem: PokemonImages): Boolean {
         return oldItem == newItem
     }
 
-    override fun areItemsTheSame(oldItem: Sprites, newItem: Sprites): Boolean {
-        return oldItem.back_default == newItem.back_default
+    override fun areItemsTheSame(oldItem: PokemonImages, newItem: PokemonImages): Boolean {
+        return oldItem.id == newItem.id
     }
 }
