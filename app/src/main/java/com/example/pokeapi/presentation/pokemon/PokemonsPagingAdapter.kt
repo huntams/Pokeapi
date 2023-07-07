@@ -1,17 +1,14 @@
-package com.example.pokeapi.presentation
+package com.example.pokeapi.presentation.pokemon
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import by.kirich1409.viewbindingdelegate.viewBinding
-import by.kirich1409.viewbindingdelegate.viewBindingLazy
 import coil.load
+import com.example.pokeapi.R
+import com.example.pokeapi.data.remote.model.ApiResource
 import com.example.pokeapi.data.remote.model.NamedAPIResource
-import com.example.pokeapi.databinding.FragmentRecyclerMenuBinding
 import com.example.pokeapi.databinding.ItemPokemonBinding
 import javax.inject.Inject
 
@@ -48,7 +45,9 @@ class PokemonsPagingAdapter @Inject constructor() :
 
 
             with(binding) {
-                imagepart.load(url)
+                imagepart.load(url){
+                    placeholder(R.drawable.ic_pokemon)
+                }
 
                 number.text = item.name
 
@@ -60,7 +59,6 @@ class PokemonsPagingAdapter @Inject constructor() :
         }
     }
 }
-
 private val diffUtilCallback = object : DiffUtil.ItemCallback<NamedAPIResource>() {
 
     override fun areContentsTheSame(oldItem: NamedAPIResource, newItem: NamedAPIResource): Boolean {

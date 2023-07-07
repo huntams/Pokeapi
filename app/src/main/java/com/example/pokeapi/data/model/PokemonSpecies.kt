@@ -1,5 +1,6 @@
 package com.example.pokeapi.data.model
 
+import android.graphics.Color
 import com.example.pokeapi.data.remote.model.ApiResource
 import com.example.pokeapi.data.remote.model.Description
 import com.example.pokeapi.data.remote.model.NamedAPIResource

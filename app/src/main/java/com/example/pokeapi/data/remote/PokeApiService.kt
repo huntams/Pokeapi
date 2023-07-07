@@ -1,12 +1,12 @@
 package com.example.pokeapi.data.remote
 
-import com.example.pokeapi.data.model.PokemonSpecies
 import com.example.pokeapi.data.remote.model.ApiPokemon
 import com.example.pokeapi.data.remote.model.ApiPokemonColor
-import com.example.pokeapi.data.remote.model.NamedAPIResource
+import com.example.pokeapi.data.remote.model.ApiResource
 import com.example.pokeapi.data.remote.model.PageDataResponse
 import com.example.pokeapi.data.remote.model.ApiPokemonSpecies
 import com.example.pokeapi.data.remote.model.EvolutionChain
+import com.example.pokeapi.data.remote.model.NamedAPIResource
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -18,6 +18,12 @@ interface PokeApiService {
         @Query("limit") limit: Int,
         @Query("offset") offset: String?,
     ): PageDataResponse<NamedAPIResource>
+
+    @GET("evolution-chain/")
+    suspend fun getEvolutions(
+        @Query("limit") limit: Int,
+        @Query("offset") offset: String?,
+    ): PageDataResponse<ApiResource>
 
     @GET("pokemon/{id}")
     suspend fun getPokemonById(
@@ -37,10 +43,10 @@ interface PokeApiService {
     @GET("pokemon-color/{pokemonId}")
     suspend fun getPokemonColorById(
         @Path("pokemonId") pokemonId: Int
-    ) : ApiPokemonColor
+    ): ApiPokemonColor
 
     @GET("evolution-chain/{pokemonId}")
     suspend fun getPokemonEvolutionById(
-        @Path("pokemonId")pokemonId: Int
+        @Path("pokemonId") pokemonId: Int
     ): EvolutionChain
 }

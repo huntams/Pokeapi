@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EvolutionDetail(
     val min_level: Int?=null,
-    val trigger: NamedAPIResource?=null,
+    val trigger: ApiResource?=null,
 )

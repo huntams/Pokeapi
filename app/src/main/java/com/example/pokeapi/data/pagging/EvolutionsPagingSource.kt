@@ -4,19 +4,18 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.pokeapi.data.remote.PokeApiService
 import com.example.pokeapi.data.remote.model.ApiResource
-import com.example.pokeapi.data.remote.model.NamedAPIResource
 
-class PokemonPagingSource(
+class EvolutionsPagingSource(
     private val apiService: PokeApiService,
-) : PagingSource<String, NamedAPIResource>() {
-    override fun getRefreshKey(state: PagingState<String, NamedAPIResource>): String? {
+) : PagingSource<String, ApiResource>() {
+    override fun getRefreshKey(state: PagingState<String, ApiResource>): String? {
         return null
 
     }
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, NamedAPIResource> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, ApiResource> {
         try {
-            val response = apiService.getPokemons(
+            val response = apiService.getEvolutions(
                 limit = params.loadSize,
                 offset = params.key
             )
@@ -24,7 +23,7 @@ class PokemonPagingSource(
             val end = next?.let { response.next.indexOf("&limit", it) }
             return LoadResult.Page(
                 data = response.results,
-                nextKey = end?.let { response.next.substring(next+7, it) },
+                nextKey = response.next,//end?.let { response.next.substring(next+7, it) },
                 prevKey = response.previous
             )
         } catch (e: Exception) {

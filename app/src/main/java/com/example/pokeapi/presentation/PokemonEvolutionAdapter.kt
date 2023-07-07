@@ -7,13 +7,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.pokeapi.data.remote.model.ChainLink
-import com.example.pokeapi.data.remote.model.EvolutionChain
-import com.example.pokeapi.data.remote.model.Sprites
 import com.example.pokeapi.databinding.ItemEvolutionPokemonBinding
-import com.example.pokeapi.databinding.ItemImagePokemonBinding
 import javax.inject.Inject
 
-class PokemonEvolutionAdapter @Inject constructor() : ListAdapter<ChainLink, PokemonEvolutionAdapter.DataViewHolder>(diffUtilCallback) {
+class PokemonEvolutionAdapter @Inject constructor() : ListAdapter<ChainLink, PokemonEvolutionAdapter.DataViewHolder>(
+    diffUtilCallback
+) {
 
     private var onClick: (ChainLink) -> Unit = {}
     fun setCallback(callback: (ChainLink) -> Unit) {

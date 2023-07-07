@@ -8,9 +8,11 @@ import com.example.pokeapi.data.mappers.PokemonMapper
 import com.example.pokeapi.data.mappers.PokemonSpeciesMapper
 import com.example.pokeapi.data.model.Pokemon
 import com.example.pokeapi.data.model.PokemonSpecies
+import com.example.pokeapi.data.pagging.EvolutionsPagingSource
 import com.example.pokeapi.data.pagging.PokemonPagingSource
 import com.example.pokeapi.data.remote.PokeApiService
 import com.example.pokeapi.data.remote.model.ApiPokemonColor
+import com.example.pokeapi.data.remote.model.ApiResource
 import com.example.pokeapi.data.remote.model.EvolutionChain
 import com.example.pokeapi.data.remote.model.NamedAPIResource
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +27,7 @@ class PokeRepositoryImpl @Inject constructor(
     override suspend fun getPokemons(): Flow<PagingData<NamedAPIResource>> {
         return Pager(
             config = PagingConfig(20, enablePlaceholders = false),
-            pagingSourceFactory = { PokemonPagingSource(apiService,"pokemon") },
+            pagingSourceFactory = { PokemonPagingSource(apiService) },
         ).flow.map {pagingdata->
             pagingdata.map {
                 it
@@ -34,6 +36,17 @@ class PokeRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getEvolutions(): Flow<PagingData<ApiResource>> {
+        return Pager(
+            config = PagingConfig(20, enablePlaceholders = false),
+            pagingSourceFactory = { EvolutionsPagingSource(apiService) },
+        ).flow.map {pagingdata->
+            pagingdata.map {
+                it
+            }
+
+        }
+    }
 
 
     override suspend fun getPokemonById(pokemonId: Int): Pokemon {
