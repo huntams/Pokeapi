@@ -1,4 +1,4 @@
-package com.example.pokeapi.presentation
+package com.example.pokeapi.presentation.pokemon
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.pokeapi.data.model.Pokemon
 import com.example.pokeapi.data.model.PokemonImages
-import com.example.pokeapi.data.remote.model.Sprites
 import com.example.pokeapi.databinding.ItemImagePokemonBinding
-import com.example.pokeapi.databinding.ItemPokemonBinding
 import javax.inject.Inject
 
-class PokemonImageAdapter @Inject constructor() : ListAdapter<PokemonImages, PokemonImageAdapter.DataViewHolder>(diffUtilCallback) {
+class PokemonImageAdapter @Inject constructor() : ListAdapter<PokemonImages, PokemonImageAdapter.DataViewHolder>(
+    diffUtilCallback
+) {
 
     private var onClick: (PokemonImages) -> Unit = {}
     fun setCallback(callback: (PokemonImages) -> Unit) {

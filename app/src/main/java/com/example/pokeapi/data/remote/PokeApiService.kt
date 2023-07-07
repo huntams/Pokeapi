@@ -6,6 +6,7 @@ import com.example.pokeapi.data.remote.model.ApiPokemonColor
 import com.example.pokeapi.data.remote.model.NamedAPIResource
 import com.example.pokeapi.data.remote.model.PageDataResponse
 import com.example.pokeapi.data.remote.model.ApiPokemonSpecies
+import com.example.pokeapi.data.remote.model.ApiResource
 import com.example.pokeapi.data.remote.model.EvolutionChain
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,6 +19,11 @@ interface PokeApiService {
         @Query("limit") limit: Int,
         @Query("offset") offset: String?,
     ): PageDataResponse<NamedAPIResource>
+    @GET("evolution-chain/")
+    suspend fun getEvolutions(
+        @Query("limit") limit: Int,
+        @Query("offset") offset: String?,
+    ): PageDataResponse<ApiResource>
 
     @GET("pokemon/{id}")
     suspend fun getPokemonById(

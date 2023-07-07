@@ -1,32 +1,19 @@
-package com.example.pokeapi.presentation
+package com.example.pokeapi.presentation.pokemon
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import coil.load
 import com.example.pokeapi.R
-import com.example.pokeapi.data.model.Pokemon
 import com.example.pokeapi.data.model.PokemonImages
 import com.example.pokeapi.data.remote.model.ChainLink
-import com.example.pokeapi.databinding.ActivityMainBinding
 import com.example.pokeapi.databinding.FragmentFocusPokemonBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -83,8 +70,6 @@ class PokemonFragment : Fragment(R.layout.fragment_focus_pokemon) {
                     images.add(PokemonImages(6, sprites.back_female))
                     images.add(PokemonImages(7, sprites.back_shiny))
                     images.add(PokemonImages(8, sprites.back_shiny_female))
-
-
                 }
                 pokemonImageAdapter.submitList(images)
                 recyclerViewImages.apply {

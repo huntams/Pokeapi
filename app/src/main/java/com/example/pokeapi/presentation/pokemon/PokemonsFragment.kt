@@ -1,4 +1,4 @@
-package com.example.pokeapi.presentation
+package com.example.pokeapi.presentation.pokemon
 
 import android.os.Bundle
 import android.view.View
@@ -54,7 +54,11 @@ class PokemonsFragment : Fragment(R.layout.fragment_recycler_menu) {
                 submitData(viewLifecycleOwner.lifecycle, result)
 
                 setCallback {
-                    findNavController().navigate(PokemonsFragmentDirections.actionPokemonsFragmentToPokemonFragment(it.name))
+                    findNavController().navigate(
+                        PokemonsFragmentDirections.actionPokemonsFragmentToPokemonFragment(
+                            it.name
+                        )
+                    )
                 }
             }
 

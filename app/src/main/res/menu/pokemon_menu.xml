@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-        android:id="@+id/Feed"
-        android:icon="@drawable/ic_favorite_24"
-        android:title="@string/favorite"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_evolutionsFragment"
+            android:icon="@drawable/ic_chain_24"
+            android:title="@string/evolutions" />
+        <item
+            android:id="@+id/nav_pokemonsFragment"
+            android:icon="@drawable/ic_pokemon_24"
+            android:title="@string/pokemons" />
+    </group>
 </menu>
