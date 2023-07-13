@@ -60,7 +60,7 @@ class PokemonFragment : Fragment(R.layout.fragment_focus_pokemon) {
         viewModel.pokemonLiveData.observe(viewLifecycleOwner) { pokemon ->
             with(binding) {
                 textViewNumber.text = "#" + pokemon.id.toString().padStart(3, '0')
-                textViewName.text = pokemon.name
+
                 with(pokemon) {
                     images.add(PokemonImages(1, sprites.front_default))
                     images.add(PokemonImages(2, sprites.front_female))
@@ -98,8 +98,11 @@ class PokemonFragment : Fragment(R.layout.fragment_focus_pokemon) {
                 appBar.background = desiredColor.toDrawable()
                 toolbar.background = desiredColor.toDrawable()
                 toolbar.title = it.name
-                textViewInfo.text = it.capture_rate.toString()
-                textViewLegendary.text = it.color.name
+
+                textViewNumber.text = "#" + it.id.toString().padStart(3, '0')
+                textViewName.text = "Capture rate: " + it.capture_rate.toString()
+                textViewInfo.text = "Is mythical: " + it.is_mythical
+                textViewLegendary.text = "Is legendary: " + it.is_legendary
                 viewModel.getPokemonEvolutionById(
                     it.evolution_chain.url
                         .substringAfter("evolution-chain")
