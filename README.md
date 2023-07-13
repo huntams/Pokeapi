@@ -1,5 +1,5 @@
 # Pokeapi
-##Technologies 
+## __Technologies__ 
 
 * [Used API](https://pokeapi.co/docs/v2)
 * [Kotlin](https://kotlinlang.org/)
@@ -11,7 +11,7 @@
 * [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 * [Chucker](https://github.com/ChuckerTeam/chucker)
 
-##Screenshots
+## __Screenshots__
 ![](app/src/main/java/com/example/pokeapi/screenshots/Screenshot_20230714_014600.png)
 ![](app/src/main/java/com/example/pokeapi/screenshots/Screenshot_20230714_015936.png)
 ![](app/src/main/java/com/example/pokeapi/screenshots/Screenshot_20230714_015958.png)
