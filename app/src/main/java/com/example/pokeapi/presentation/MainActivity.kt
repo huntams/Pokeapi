@@ -1,8 +1,8 @@
 package com.example.pokeapi.presentation
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -31,17 +31,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val navController = findNavController(R.id.nav_host_fragment_container)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_evolutionsFragment,R.id.nav_pokemonsFragment
+                R.id.nav_evolutionsFragment, R.id.nav_pokemonsFragment
             ), drawerLayout
         )
         setSupportActionBar(binding.appBarMain.toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
-        binding.navView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.nav_pokemonFragment){
-                this.supportActionBar?.hide()
+        with(binding.navView) {
+            setupWithNavController(navController)
+            getHeaderView(0).findViewById<TextView>(R.id.textViewName).text
+            getHeaderView(0).setOnClickListener {
+                Toast.makeText(this@MainActivity, "header touched", Toast.LENGTH_LONG).show()
             }
-            else{
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.nav_pokemonFragment) {
+                this.supportActionBar?.hide()
+            } else {
                 this.supportActionBar?.show()
             }
         }

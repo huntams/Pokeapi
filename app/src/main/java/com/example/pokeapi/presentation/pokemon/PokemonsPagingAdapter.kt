@@ -3,11 +3,11 @@ package com.example.pokeapi.presentation.pokemon
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.pokeapi.R
-import com.example.pokeapi.data.remote.model.ApiResource
 import com.example.pokeapi.data.remote.model.NamedAPIResource
 import com.example.pokeapi.databinding.ItemPokemonBinding
 import javax.inject.Inject
@@ -34,6 +34,11 @@ class PokemonsPagingAdapter @Inject constructor() :
     inner class DataViewHolder(
         private val binding: ItemPokemonBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
+        fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
+            object : ItemDetailsLookup.ItemDetails<Long>() {
+                override fun getPosition(): Int = bindingAdapterPosition
+                override fun getSelectionKey(): Long = itemId
+            }
         fun bind(item: NamedAPIResource) {
 
             val url = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/" +
@@ -45,11 +50,12 @@ class PokemonsPagingAdapter @Inject constructor() :
 
 
             with(binding) {
-                imagepart.load(url){
+                imageViewPokemon.load(url){
                     placeholder(R.drawable.ic_pokemon)
                 }
 
-                number.text = item.name
+                textViewNumber.text = item.name
+
 
                 root.setOnClickListener {
                     onClick.invoke(item)

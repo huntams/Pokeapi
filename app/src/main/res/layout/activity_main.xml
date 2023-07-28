@@ -19,5 +19,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        app:headerLayout="@layout/item_evolution_pokemon"
         app:menu="@menu/pokemon_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -6,16 +6,17 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.pokeapi.base.BaseViewModel
+import com.example.pokeapi.data.db.PokemonModel
 import com.example.pokeapi.data.model.Pokemon
 import com.example.pokeapi.data.model.PokemonSpecies
 import com.example.pokeapi.data.remote.model.EvolutionChain
-import com.example.pokeapi.data.remote.model.ApiResource
 import com.example.pokeapi.data.remote.model.NamedAPIResource
 import com.example.pokeapi.domain.GetPokemonByIdUseCase
 import com.example.pokeapi.domain.GetPokemonByNameUseCase
 import com.example.pokeapi.domain.GetPokemonEvolutionByIdUseCase
 import com.example.pokeapi.domain.GetPokemonSpeciesByIdUseCase
 import com.example.pokeapi.domain.GetPokemonsUseCase
+import com.example.pokeapi.domain.db.AddPokemonDBUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,6 +29,7 @@ class PokemonsViewModel @Inject constructor(
     private val getPokemonByNameUseCase: GetPokemonByNameUseCase,
     private val getPokemonSpeciesByIdUseCase: GetPokemonSpeciesByIdUseCase,
     private val getPokemonEvolutionByIdUseCase: GetPokemonEvolutionByIdUseCase,
+    private val addPokemonDBUseCase: AddPokemonDBUseCase,
 ) : BaseViewModel() {
     private val _pokemonsLiveData = MutableLiveData<PagingData<NamedAPIResource>>()
     val pokemonsLiveData: LiveData<PagingData<NamedAPIResource>> = _pokemonsLiveData
@@ -39,6 +41,11 @@ class PokemonsViewModel @Inject constructor(
     val pokemonEvolutionLiveData: LiveData<EvolutionChain> = _pokemonEvolutionLiveData
 
 
+    fun addPokemonDB(pokemonModel: PokemonModel){
+        viewModelScope.launch {
+            addPokemonDBUseCase.execute(pokemonModel)
+        }
+    }
 
     fun getPokemons() {
         /*

@@ -2,7 +2,6 @@ package com.example.pokeapi.presentation.pokemon
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -61,10 +60,6 @@ class PokemonsFragment : Fragment(R.layout.fragment_recycler_menu) {
                     )
                 }
             }
-
-
-
-
         }
         viewModel.pokemonLiveData.observe(viewLifecycleOwner) { result ->
             /*
@@ -83,6 +78,7 @@ class PokemonsFragment : Fragment(R.layout.fragment_recycler_menu) {
         binding.recyclerView.apply {
             layoutManager = StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
             adapter = pokemonsPagingAdapter
+
         }
         super.onViewCreated(view, savedInstanceState)
     }

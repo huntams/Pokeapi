@@ -6,25 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="2dp"
+    android:layout_margin="8dp"
+    app:cardElevation="@dimen/pokemon_image_size"
     android:background="@color/black">
 
 
     <ImageView
-        android:id="@+id/imagepart"
+        android:id="@+id/imageViewPokemon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:srcCompat="@tools:sample/avatars"
         android:layout_gravity="top"/>
 
     <TextView
-        android:id="@+id/number"
+        android:id="@+id/textViewNumber"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="gfawegwaegwaegsdsadgasdgasdgagasdgg"/>
-
+        />
 
 
 

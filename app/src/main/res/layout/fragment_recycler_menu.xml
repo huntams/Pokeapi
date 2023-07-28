@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
 
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -17,5 +16,4 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         tools:itemCount="12"
         tools:listitem="@layout/item_pokemon" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
