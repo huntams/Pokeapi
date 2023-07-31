@@ -28,4 +28,8 @@
         android:id="@+id/nav_evolutionsFragment"
         android:name="com.example.pokeapi.presentation.evolution.EvolutionsFragment"
         android:label="Evolutions" />
+    <fragment
+        android:id="@+id/nav_favouritePokemonsFragment"
+        android:name="com.example.pokeapi.presentation.favourite.FavouritePokemonsFragment"
+        android:label="FavouritePokemonsFragment" />
 </navigation>

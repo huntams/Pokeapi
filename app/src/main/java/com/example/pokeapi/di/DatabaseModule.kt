@@ -32,6 +32,6 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun providePokemonDAO(db: PokeDB): PokeDAO  {
-        return db.notesDAO()
+        return db.pokesDAO()
     }
 }

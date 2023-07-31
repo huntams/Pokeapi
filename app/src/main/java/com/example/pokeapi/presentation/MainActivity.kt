@@ -40,12 +40,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             setupWithNavController(navController)
             getHeaderView(0).findViewById<TextView>(R.id.textViewName).text
             getHeaderView(0).setOnClickListener {
-                Toast.makeText(this@MainActivity, "header touched", Toast.LENGTH_LONG).show()
+                navController.navigate(R.id.nav_favouritePokemonsFragment)
             }
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.nav_pokemonFragment) {
+            if (destination.id == R.id.nav_pokemonFragment ) {
                 this.supportActionBar?.hide()
             } else {
                 this.supportActionBar?.show()

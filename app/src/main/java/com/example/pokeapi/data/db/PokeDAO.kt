@@ -10,8 +10,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PokeDAO {
     @Insert
-    suspend fun addPokemon(note: PokeEntity): Long
+    suspend fun addPokemon(pokeEntity: PokeEntity): Long
 
+    @Query("SELECT * FROM Pokemons WHERE id LIKE :data")
+    fun getPokemon(data: Long): Flow<PokeEntity?>
     @Query("SELECT * FROM Pokemons")
     fun getPokemons(): Flow<List<PokeEntity>>
 
@@ -19,5 +21,5 @@ interface PokeDAO {
     fun filterPokemons(data: String): Flow<List<PokeEntity>>
 
     @Delete
-    suspend fun deletePokemon(note: PokeEntity)
+    suspend fun deletePokemon(pokeEntity: PokeEntity)
 }

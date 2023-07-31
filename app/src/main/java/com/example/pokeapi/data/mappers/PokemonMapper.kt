@@ -1,7 +1,9 @@
 package com.example.pokeapi.data.mappers
 
 import com.example.pokeapi.data.db.PokemonModel
+import com.example.pokeapi.data.db.PokemonWithSpritesModel
 import com.example.pokeapi.data.db.model.PokeEntity
+import com.example.pokeapi.data.db.model.PokemonWithSprites
 import com.example.pokeapi.data.model.Pokemon
 import com.example.pokeapi.data.remote.model.ApiPokemon
 import javax.inject.Inject
@@ -9,12 +11,26 @@ import javax.inject.Singleton
 
 @Singleton
 class PokemonMapper @Inject constructor() {
+    /*
+    fun fromEntityToUIModel(pokemonWithSprites: PokemonWithSprites): PokemonWithSpritesModel {
+        return PokemonWithSpritesModel(
+            pokemonEntity = pokemonWithSprites.pokemonEntity,
+            sprites = pokemonWithSprites.sprites,
+        )
+    }
+    fun fromUIModelToEntity(pokemonWithSpritesModel: PokemonWithSpritesModel): PokemonWithSprites {
+        return PokemonWithSprites(
+            pokemonEntity = pokemonWithSpritesModel.pokemonEntity,
+            sprites = pokemonWithSpritesModel.sprites,
+        )
+    }
+
+     */
 
     fun fromEntityToUIModel(entity: PokeEntity): PokemonModel {
         return PokemonModel(
             id = entity.id,
             name = entity.name,
-            //sprites = entity.sprites,
             location_area_encounters = entity.location_area_encounters,
             gender_rate = entity.gender_rate,
             capture_rate = entity.capture_rate,
@@ -29,7 +45,6 @@ class PokemonMapper @Inject constructor() {
         return PokeEntity(
             id = pokemonModel.id,
             name = pokemonModel.name,
-            //sprites = pokemonModel.sprites,
             location_area_encounters = pokemonModel.location_area_encounters,
             gender_rate = pokemonModel.gender_rate,
             capture_rate = pokemonModel.capture_rate,

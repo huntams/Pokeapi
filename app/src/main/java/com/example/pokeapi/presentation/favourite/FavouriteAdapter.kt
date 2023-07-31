@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokeapi.data.db.PokemonModel
+import com.example.pokeapi.databinding.ItemDbPokemonBinding
 import com.example.pokeapi.databinding.ItemPokemonBinding
 import javax.inject.Inject
 
@@ -16,7 +17,7 @@ class FavouriteAdapter @Inject constructor() :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        val binding = ItemPokemonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemDbPokemonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NoteViewHolder(binding)
     }
 
@@ -25,7 +26,7 @@ class FavouriteAdapter @Inject constructor() :
     }
 
     inner class NoteViewHolder(
-        private var binding: ItemPokemonBinding
+        private var binding: ItemDbPokemonBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PokemonModel) {
             with(binding) {
@@ -36,6 +37,7 @@ class FavouriteAdapter @Inject constructor() :
                 }
                 textViewNumber.text = item.id.toString()
 
+                textViewName.text =item.name.toString()
                 /*
                 Glide.with(itemView)
                     .load(item.uri)

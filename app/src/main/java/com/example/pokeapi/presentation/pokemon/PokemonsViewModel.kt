@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.pokeapi.base.BaseViewModel
 import com.example.pokeapi.data.db.PokemonModel
+import com.example.pokeapi.data.db.PokemonWithSpritesModel
 import com.example.pokeapi.data.model.Pokemon
 import com.example.pokeapi.data.model.PokemonSpecies
 import com.example.pokeapi.data.remote.model.EvolutionChain
@@ -17,7 +18,11 @@ import com.example.pokeapi.domain.GetPokemonEvolutionByIdUseCase
 import com.example.pokeapi.domain.GetPokemonSpeciesByIdUseCase
 import com.example.pokeapi.domain.GetPokemonsUseCase
 import com.example.pokeapi.domain.db.AddPokemonDBUseCase
+import com.example.pokeapi.domain.db.DeletePokemonDBUseCase
+import com.example.pokeapi.domain.db.GetPokemonDBUseCase
+import com.example.pokeapi.domain.db.GetPokemonsDBUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +35,9 @@ class PokemonsViewModel @Inject constructor(
     private val getPokemonSpeciesByIdUseCase: GetPokemonSpeciesByIdUseCase,
     private val getPokemonEvolutionByIdUseCase: GetPokemonEvolutionByIdUseCase,
     private val addPokemonDBUseCase: AddPokemonDBUseCase,
+    private val getPokemonDBUseCase: GetPokemonDBUseCase,
+    private val deletePokemonDBUseCase: DeletePokemonDBUseCase,
+    private val getPokemonsDBUseCase: GetPokemonsDBUseCase,
 ) : BaseViewModel() {
     private val _pokemonsLiveData = MutableLiveData<PagingData<NamedAPIResource>>()
     val pokemonsLiveData: LiveData<PagingData<NamedAPIResource>> = _pokemonsLiveData
@@ -39,6 +47,70 @@ class PokemonsViewModel @Inject constructor(
     val pokemonSpeciesLiveData: LiveData<PokemonSpecies> = _pokemonSpeciesLiveData
     private val _pokemonEvolutionLiveData = MutableLiveData<EvolutionChain>()
     val pokemonEvolutionLiveData: LiveData<EvolutionChain> = _pokemonEvolutionLiveData
+    private val _pokemonsDBLiveData = MutableLiveData<List<PokemonModel>>()
+    val pokemonsDBLiveData: LiveData<List<PokemonModel>> = _pokemonsDBLiveData
+    private val _pokemonDBLiveData = MutableLiveData<Any?>()
+    val pokemonDBLiveData: LiveData<Any?> = _pokemonDBLiveData
+    //private val _pokemonsDBLiveData = MutableLiveData<List<PokemonWithSpritesModel>>()
+    //val pokemonsDBLiveData: LiveData<List<PokemonWithSpritesModel>> = _pokemonsDBLiveData
+
+    /*
+    fun deletePokemonDB(pokemonWithSpritesModel: PokemonWithSpritesModel){
+        viewModelScope.launch {
+            deletePokemonDBUseCase.execute(pokemonWithSpritesModel)
+        }
+    }
+    fun getPokemonsDB(){
+        viewModelScope.launch {
+            getPokemonsDBUseCase.execute().collect{list->
+                _pokemonsDBLiveData.value = list.map { entity->
+                    entity.copy(
+                        pokemonEntity = entity.pokemonEntity,
+                        sprites = entity.sprites,
+                    )
+                }
+
+            }
+        }
+    }
+
+     */
+    fun deletePokemonDB(pokemonModel: PokemonModel){
+        viewModelScope.launch {
+            deletePokemonDBUseCase.execute(pokemonModel)
+        }
+    }
+    fun getPokemonsDB(){
+        viewModelScope.launch {
+            getPokemonsDBUseCase.execute().collect {list->
+                _pokemonsDBLiveData.value = list.map{ entity->
+                    entity.copy(
+                        id = entity.id,
+                        name = entity.name,
+                        //sprites = entity.sprites,
+                        location_area_encounters = entity.location_area_encounters,
+                        gender_rate = entity.gender_rate,
+                        capture_rate = entity.capture_rate,
+                        is_legendary = entity.is_legendary,
+                        is_mythical = entity.is_mythical,
+                        color = entity.color,
+                        //form_descriptions = entity.form_descriptions,
+                        //evolution_chain = entity.evolution_chain,
+                    )
+            }
+            }
+        }
+    }
+
+
+
+    fun getPokemonDB(data: Long){
+        viewModelScope.launch {
+            getPokemonDBUseCase.execute(data).collect { entity->
+                _pokemonDBLiveData.value = entity
+            }
+        }
+    }
 
 
     fun addPokemonDB(pokemonModel: PokemonModel){
