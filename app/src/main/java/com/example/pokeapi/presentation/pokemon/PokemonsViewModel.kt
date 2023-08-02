@@ -8,6 +8,7 @@ import androidx.paging.cachedIn
 import com.example.pokeapi.base.BaseViewModel
 import com.example.pokeapi.data.db.PokemonModel
 import com.example.pokeapi.data.db.PokemonWithSpritesModel
+import com.example.pokeapi.data.db.model.SpriteDBEntity
 import com.example.pokeapi.data.model.Pokemon
 import com.example.pokeapi.data.model.PokemonSpecies
 import com.example.pokeapi.data.remote.model.EvolutionChain
@@ -18,9 +19,11 @@ import com.example.pokeapi.domain.GetPokemonEvolutionByIdUseCase
 import com.example.pokeapi.domain.GetPokemonSpeciesByIdUseCase
 import com.example.pokeapi.domain.GetPokemonsUseCase
 import com.example.pokeapi.domain.db.AddPokemonDBUseCase
+import com.example.pokeapi.domain.db.AddSpriteDBUseCase
 import com.example.pokeapi.domain.db.DeletePokemonDBUseCase
 import com.example.pokeapi.domain.db.GetPokemonDBUseCase
 import com.example.pokeapi.domain.db.GetPokemonsDBUseCase
+import com.example.pokeapi.domain.db.GetPokemonsWithSpritesDBUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -38,6 +41,8 @@ class PokemonsViewModel @Inject constructor(
     private val getPokemonDBUseCase: GetPokemonDBUseCase,
     private val deletePokemonDBUseCase: DeletePokemonDBUseCase,
     private val getPokemonsDBUseCase: GetPokemonsDBUseCase,
+    private val addSpriteDBUseCase: AddSpriteDBUseCase,
+    private val getPokemonsWithSpritesDBUseCase: GetPokemonsWithSpritesDBUseCase,
 ) : BaseViewModel() {
     private val _pokemonsLiveData = MutableLiveData<PagingData<NamedAPIResource>>()
     val pokemonsLiveData: LiveData<PagingData<NamedAPIResource>> = _pokemonsLiveData
@@ -51,6 +56,8 @@ class PokemonsViewModel @Inject constructor(
     val pokemonsDBLiveData: LiveData<List<PokemonModel>> = _pokemonsDBLiveData
     private val _pokemonDBLiveData = MutableLiveData<Any?>()
     val pokemonDBLiveData: LiveData<Any?> = _pokemonDBLiveData
+    private val _pokemonsSpritesDBLiveData = MutableLiveData<List<PokemonWithSpritesModel>>()
+    val pokemonsSpritesDBLiveData: LiveData<List<PokemonWithSpritesModel>> = _pokemonsSpritesDBLiveData
     //private val _pokemonsDBLiveData = MutableLiveData<List<PokemonWithSpritesModel>>()
     //val pokemonsDBLiveData: LiveData<List<PokemonWithSpritesModel>> = _pokemonsDBLiveData
 
@@ -75,6 +82,24 @@ class PokemonsViewModel @Inject constructor(
     }
 
      */
+    fun getPokemonsWithSprites(){
+        viewModelScope.launch {
+            getPokemonsWithSpritesDBUseCase.execute().collect {list->
+                _pokemonsSpritesDBLiveData.value = list.map{ entity->
+                    entity.copy(
+                        pokemonEntity = entity.pokemonEntity,
+                        sprites = entity.sprites
+
+                    )
+                }
+            }
+        }
+    }
+    fun addSprite(spriteDBEntity: SpriteDBEntity){
+        viewModelScope.launch {
+            addSpriteDBUseCase.execute(spriteDBEntity)
+        }
+    }
     fun deletePokemonDB(pokemonModel: PokemonModel){
         viewModelScope.launch {
             deletePokemonDBUseCase.execute(pokemonModel)

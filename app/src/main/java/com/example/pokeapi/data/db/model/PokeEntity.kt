@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Pokemons")
 data class PokeEntity(
+    @ColumnInfo(name = "poke_id")
     @PrimaryKey val id: Long,
     val name: String?=null,
     val location_area_encounters: String?=null,

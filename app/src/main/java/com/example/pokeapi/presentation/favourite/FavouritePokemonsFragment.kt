@@ -27,12 +27,16 @@ class FavouritePokemonsFragment : Fragment(R.layout.fragment_recycler_menu) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            viewModel.getPokemonsDB()
-            viewModel.pokemonsDBLiveData.observe(viewLifecycleOwner) { pokemons ->
+            viewModel.getPokemonsWithSprites()
+            //viewModel.getPokemonsDB()
+            viewModel.pokemonsSpritesDBLiveData.observe(viewLifecycleOwner){pokemons->
                 favouriteAdapter.submitList(pokemons)
                 recyclerView.apply {
                     adapter = favouriteAdapter
                 }
+            }
+            viewModel.pokemonsDBLiveData.observe(viewLifecycleOwner) { pokemons ->
+
             }
         }
     }

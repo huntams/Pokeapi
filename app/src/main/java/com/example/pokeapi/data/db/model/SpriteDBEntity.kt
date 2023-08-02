@@ -10,7 +10,8 @@ import androidx.room.PrimaryKey
     tableName = "sprites"
 )
 data class SpriteDBEntity(
-    @PrimaryKey val spriteId: Long,
+    @PrimaryKey(autoGenerate = true) val spriteId: Long = 0,
+    @ColumnInfo(name = "pokeEntityId")
     val pokemonEntityId: Long,
-    val sprite: ByteArray? = null,
+    val sprite: ByteArray,
 )

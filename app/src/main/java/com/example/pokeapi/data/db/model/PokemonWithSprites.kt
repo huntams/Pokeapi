@@ -10,8 +10,8 @@ data class PokemonWithSprites(
     @Embedded
     val pokeEntity: PokeEntity,
     @Relation(
-        parentColumn = "id",
-        entityColumn = "pokemonEntityId",
+        parentColumn = "poke_id",
+        entityColumn = "pokeEntityId",
     )
     val sprites: List<SpriteDBEntity>
 )

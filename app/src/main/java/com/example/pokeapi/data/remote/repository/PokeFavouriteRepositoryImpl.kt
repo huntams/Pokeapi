@@ -5,6 +5,7 @@ import com.example.pokeapi.data.db.PokemonModel
 import com.example.pokeapi.data.db.PokemonWithSpritesModel
 import com.example.pokeapi.data.db.model.PokeEntity
 import com.example.pokeapi.data.db.model.PokemonWithSprites
+import com.example.pokeapi.data.db.model.SpriteDBEntity
 import com.example.pokeapi.data.mappers.PokemonMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -48,7 +49,17 @@ class PokeFavouriteRepositoryImpl @Inject constructor(
     }
 
      */
+    override suspend fun addSprites(spriteDBEntity: SpriteDBEntity) {
+        pokeDAO.addSprites(spriteDBEntity)
+    }
 
+    override fun getPokemonsWithSprites(): Flow<List<PokemonWithSpritesModel>> {
+        return pokeDAO.getPokemonsWithSprites().map { list ->
+            list.map {
+                pokemonMapper.fromSpritesEntityToUIModel(it)
+            }
+        }
+    }
 
     override fun getPokemon(data: Long): Flow<Any?> {
         return pokeDAO.getPokemon(data).map { entity ->

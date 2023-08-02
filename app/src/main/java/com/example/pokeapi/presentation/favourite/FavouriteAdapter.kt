@@ -1,23 +1,28 @@
 package com.example.pokeapi.presentation.favourite
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.pokeapi.data.db.PokemonModel
+import com.example.pokeapi.data.db.PokemonWithSpritesModel
 import com.example.pokeapi.databinding.ItemDbPokemonBinding
 import com.example.pokeapi.databinding.ItemPokemonBinding
 import javax.inject.Inject
 
 class FavouriteAdapter @Inject constructor() :
-    ListAdapter<PokemonModel, FavouriteAdapter.NoteViewHolder>(diffUtil) {
-    private var onNoteClick: (PokemonModel) -> Unit = {}
-    private var onNoteLongClick: (PokemonModel) -> Unit = {}
+    ListAdapter<PokemonWithSpritesModel, FavouriteAdapter.NoteViewHolder>(diffUtil) {
+    private var onNoteClick: (PokemonWithSpritesModel) -> Unit = {}
+    private var onNoteLongClick: (PokemonWithSpritesModel) -> Unit = {}
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        val binding = ItemDbPokemonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemDbPokemonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NoteViewHolder(binding)
     }
 
@@ -28,16 +33,33 @@ class FavouriteAdapter @Inject constructor() :
     inner class NoteViewHolder(
         private var binding: ItemDbPokemonBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: PokemonModel) {
+        fun bind(item: PokemonWithSpritesModel) {
             with(binding) {
                 root.setOnClickListener { onNoteClick(item) }
                 root.setOnLongClickListener {
                     onNoteLongClick(item)
                     true
                 }
-                textViewNumber.text = item.id.toString()
 
-                textViewName.text =item.name.toString()
+                val reqContext = root.context
+                val colorId: Int = reqContext.resources.getIdentifier(
+                    item.pokemonEntity.color,
+                    "color",
+                    reqContext.packageName
+                )
+                val desiredColor: Int =
+                    androidx.core.content.ContextCompat.getColor(reqContext, colorId)
+                root.background = desiredColor.toDrawable()
+                textViewNumber.text = item.pokemonEntity.id.toString()
+
+                textViewName.text = item.pokemonEntity.name.toString()
+                imageViewPokemon.setImageBitmap(
+                    BitmapFactory.decodeByteArray(
+                        item.sprites.last().sprite,
+                        0,
+                        item.sprites.last().sprite.size
+                    )
+                )
                 /*
                 Glide.with(itemView)
                     .load(item.uri)
@@ -59,9 +81,15 @@ class FavouriteAdapter @Inject constructor() :
     }
 }
 
-private val diffUtil = object : DiffUtil.ItemCallback<PokemonModel>() {
+private val diffUtil = object : DiffUtil.ItemCallback<PokemonWithSpritesModel>() {
 
-    override fun areContentsTheSame(oldItem: PokemonModel, newItem: PokemonModel) = oldItem == newItem
+    override fun areContentsTheSame(
+        oldItem: PokemonWithSpritesModel,
+        newItem: PokemonWithSpritesModel
+    ) = oldItem == newItem
 
-    override fun areItemsTheSame(oldItem: PokemonModel, newItem: PokemonModel) = oldItem.id == newItem.id
+    override fun areItemsTheSame(
+        oldItem: PokemonWithSpritesModel,
+        newItem: PokemonWithSpritesModel
+    ) = oldItem.pokemonEntity.id == newItem.pokemonEntity.id
 }

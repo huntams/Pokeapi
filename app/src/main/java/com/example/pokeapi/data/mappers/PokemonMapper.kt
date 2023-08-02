@@ -11,21 +11,21 @@ import javax.inject.Singleton
 
 @Singleton
 class PokemonMapper @Inject constructor() {
-    /*
-    fun fromEntityToUIModel(pokemonWithSprites: PokemonWithSprites): PokemonWithSpritesModel {
+
+    fun fromSpritesEntityToUIModel(pokemonWithSprites: PokemonWithSprites): PokemonWithSpritesModel {
         return PokemonWithSpritesModel(
-            pokemonEntity = pokemonWithSprites.pokemonEntity,
+            pokemonEntity = pokemonWithSprites.pokeEntity,
             sprites = pokemonWithSprites.sprites,
         )
     }
-    fun fromUIModelToEntity(pokemonWithSpritesModel: PokemonWithSpritesModel): PokemonWithSprites {
+    fun fromUIModelToSpritesEntity(pokemonWithSpritesModel: PokemonWithSpritesModel): PokemonWithSprites {
         return PokemonWithSprites(
-            pokemonEntity = pokemonWithSpritesModel.pokemonEntity,
+            pokeEntity = pokemonWithSpritesModel.pokemonEntity,
             sprites = pokemonWithSpritesModel.sprites,
         )
     }
 
-     */
+
 
     fun fromEntityToUIModel(entity: PokeEntity): PokemonModel {
         return PokemonModel(

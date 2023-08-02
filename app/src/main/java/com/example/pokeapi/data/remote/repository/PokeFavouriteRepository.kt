@@ -7,17 +7,20 @@ import com.example.pokeapi.data.db.PokemonModel
 import com.example.pokeapi.data.db.PokemonWithSpritesModel
 import com.example.pokeapi.data.db.model.PokeEntity
 import com.example.pokeapi.data.db.model.PokemonWithSprites
+import com.example.pokeapi.data.db.model.SpriteDBEntity
 import kotlinx.coroutines.flow.Flow
 
 interface PokeFavouriteRepository {
     fun getPokemons(): Flow<List<PokemonModel>>
     fun getPokemon(data: Long): Flow<Any?>
 
+    fun getPokemonsWithSprites(): Flow<List<PokemonWithSpritesModel>>
     fun filterPokemons(data: String): Flow<List<PokemonModel>>
 
     suspend fun addPokemon(pokemonModel: PokemonModel)
 
     suspend fun deletePokemon(pokemonModel: PokemonModel)
+    suspend fun addSprites(spriteDBEntity: SpriteDBEntity)
     /*
     suspend fun addPokemon(pokemonWithSpritesModel: PokemonWithSpritesModel)
 

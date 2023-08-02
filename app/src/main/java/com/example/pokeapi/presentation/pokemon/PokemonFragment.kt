@@ -18,6 +18,7 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.example.pokeapi.R
 import com.example.pokeapi.data.db.PokemonModel
+import com.example.pokeapi.data.db.model.SpriteDBEntity
 import com.example.pokeapi.data.model.PokemonImages
 import com.example.pokeapi.data.remote.model.ChainLink
 import com.example.pokeapi.databinding.FragmentFocusPokemonBinding
@@ -175,7 +176,9 @@ class PokemonFragment : Fragment(R.layout.fragment_focus_pokemon) {
                     if (item != null) {
                         viewModel.deletePokemonDB(pokemonDB)
                     } else {
+                        viewModel.addSprite(SpriteDBEntity(pokemonEntityId = pokemonDB.id, sprite = byteArray.last()))
                         viewModel.addPokemonDB(pokemonDB)
+
                     }
                     /*
                     Toast.makeText(requireContext(),pokemonDB.name,Toast.LENGTH_LONG).show()
