@@ -10,15 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.pokeapi.data.db.PokemonModel
 import com.example.pokeapi.data.db.PokemonWithSpritesModel
+import com.example.pokeapi.data.remote.model.NamedAPIResource
 import com.example.pokeapi.databinding.ItemDbPokemonBinding
 import com.example.pokeapi.databinding.ItemPokemonBinding
 import javax.inject.Inject
 
 class FavouriteAdapter @Inject constructor() :
     ListAdapter<PokemonWithSpritesModel, FavouriteAdapter.NoteViewHolder>(diffUtil) {
-    private var onNoteClick: (PokemonWithSpritesModel) -> Unit = {}
-    private var onNoteLongClick: (PokemonWithSpritesModel) -> Unit = {}
-
+    private var onClick: (PokemonWithSpritesModel) -> Unit = {}
+    fun setCallback(callback: (PokemonWithSpritesModel) -> Unit) {
+        this.onClick = callback
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val binding =
@@ -35,10 +37,8 @@ class FavouriteAdapter @Inject constructor() :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PokemonWithSpritesModel) {
             with(binding) {
-                root.setOnClickListener { onNoteClick(item) }
-                root.setOnLongClickListener {
-                    onNoteLongClick(item)
-                    true
+                root.setOnClickListener {
+                    onClick.invoke(item)
                 }
 
                 val reqContext = root.context

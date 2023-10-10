@@ -5,6 +5,7 @@ import com.example.pokeapi.data.remote.model.ApiPokemonColor
 import com.example.pokeapi.data.remote.model.ApiResource
 import com.example.pokeapi.data.remote.model.PageDataResponse
 import com.example.pokeapi.data.remote.model.ApiPokemonSpecies
+import com.example.pokeapi.data.remote.model.ApiType
 import com.example.pokeapi.data.remote.model.EvolutionChain
 import com.example.pokeapi.data.remote.model.NamedAPIResource
 import retrofit2.http.GET
@@ -19,6 +20,10 @@ interface PokeApiService {
         @Query("offset") offset: String?,
     ): PageDataResponse<NamedAPIResource>
 
+    @GET("type/{Name}")
+    suspend fun getTypeByName(
+        @Path("Name") Name: String
+    ): ApiType
     @GET("evolution-chain/")
     suspend fun getEvolutions(
         @Query("limit") limit: Int,

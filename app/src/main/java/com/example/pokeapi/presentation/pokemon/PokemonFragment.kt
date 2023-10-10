@@ -1,33 +1,41 @@
 package com.example.pokeapi.presentation.pokemon
 
-import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.example.pokeapi.R
+import com.example.pokeapi.base.convertToByteArray
+import com.example.pokeapi.base.nameToId
 import com.example.pokeapi.data.db.PokemonModel
 import com.example.pokeapi.data.db.model.SpriteDBEntity
 import com.example.pokeapi.data.model.PokemonImages
+import com.example.pokeapi.data.remote.model.ApiPokemonType
 import com.example.pokeapi.data.remote.model.ChainLink
+import com.example.pokeapi.data.remote.model.NamedAPIResource
 import com.example.pokeapi.databinding.FragmentFocusPokemonBinding
 import com.example.pokeapi.presentation.PokemonEvolutionAdapter
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class PokemonFragment : Fragment(R.layout.fragment_focus_pokemon) {
@@ -39,11 +47,17 @@ class PokemonFragment : Fragment(R.layout.fragment_focus_pokemon) {
     lateinit var pokemonImageAdapter: PokemonImageAdapter
 
     @Inject
+    lateinit var pokemonTypeAdapter: PokemonTypeAdapter
+    @Inject
+    lateinit var pokemonWeaknessesAdapter: PokemonTypeAdapter
+
+    @Inject
     lateinit var pokemonEvolutionAdapter: PokemonEvolutionAdapter
 
     private var chainLinks: MutableList<ChainLink?> = mutableListOf()
     private var images: MutableList<PokemonImages> = mutableListOf()
     private val byteArray = mutableListOf<ByteArray>()
+
     private fun pokemonChain(chainLink: List<ChainLink>) {
         if (chainLink[0].evolves_to.isNotEmpty()) {
             chainLinks.add(chainLink[0])
@@ -54,9 +68,7 @@ class PokemonFragment : Fragment(R.layout.fragment_focus_pokemon) {
 
     private var item: Any? = null
     lateinit var pokemonDB: PokemonModel
-    private fun Bitmap.convertToByteArray(): ByteArray = ByteArrayOutputStream().apply {
-        compress(Bitmap.CompressFormat.JPEG, 50, this)
-    }.toByteArray()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,6 +76,7 @@ class PokemonFragment : Fragment(R.layout.fragment_focus_pokemon) {
         savedInstanceState: Bundle?
     ): View? {
         val args: PokemonFragmentArgs by navArgs()
+
         viewModel.getPokemonByName(args.pokemonName)
         viewModel.pokemonLiveData.observe(viewLifecycleOwner) { pokemon ->
             with(binding) {
@@ -97,32 +110,71 @@ class PokemonFragment : Fragment(R.layout.fragment_focus_pokemon) {
                 }.also {
                     viewModel.getPokemonSpeciesById(pokemon.id)
                 }
-                textViewName.text = pokemon.name
-                pokemonImageAdapter.submitList(images)
-                recyclerViewImages.apply {
-                    adapter = pokemonImageAdapter
+                toolbarCollapsing.background = AppCompatResources.getDrawable(
+                    requireContext(),
+                    nameToId(
+                        "ic_${pokemon.types[0].type.name}_24",
+                        "drawable",
+                        requireContext()
+                    )
+                )
+
+                buttonWeightNumber.text = "${(pokemon.weight.toFloat() / 10)} kg"
+                buttonHeightNumber.text = "${(pokemon.height.toFloat() / 10)} m"
+                pokemonTypeAdapter.submitList(viewModel.typesToNamedApiResource(pokemon.types))
+                recyclerViewType.apply {
+                    layoutManager = GridLayoutManager(requireContext(),2)
+                    adapter = pokemonTypeAdapter
                 }
+
+                pokemonImageAdapter.submitList(images)
+                recyclerViewImages.adapter = pokemonImageAdapter
                 textViewInfo.text = pokemon.location_area_encounters
+                viewModel.getTypeByName(pokemon.types[0].type.name)
+            }
+        }
+        viewModel.typeLiveData.observe(viewLifecycleOwner){
+            pokemonWeaknessesAdapter.submitList(it.damageRelations.doubleDamageFrom)
+            binding.recyclerViewWeaknesses.apply {
+                    layoutManager = GridLayoutManager(requireContext(),2)
+                    adapter = pokemonWeaknessesAdapter
             }
         }
 
         viewModel.pokemonSpeciesLiveData.observe(viewLifecycleOwner) {
             with(binding) {
-                val colorId: Int = requireContext().resources.getIdentifier(
-                    it.color.name,
-                    "color",
-                    requireContext().packageName
+                val pokemonColor = androidx.core.content.ContextCompat.getColor(
+                    requireContext(),
+                    nameToId(it.color.name, "color",requireContext())
                 )
-                val desiredColor: Int =
-                    androidx.core.content.ContextCompat.getColor(requireContext(), colorId)
-                appBar.background = desiredColor.toDrawable()
-                toolbar.background = desiredColor.toDrawable()
                 toolbar.title = it.name
-                textViewNumber.text = "#" + it.id.toString().padStart(3, '0')
-                textViewName.text = "Capture rate: " + it.capture_rate.toString()
+                appBar.addOnOffsetChangedListener(object : OnOffsetChangedListener {
+                    var isShow = false
+                    var scrollRange = -1
+                    override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+                        if (scrollRange == -1) {
+                            scrollRange = appBarLayout.totalScrollRange
+                        }
+                        if (scrollRange + verticalOffset == 0) {
+                            toolbar.background = pokemonColor.toDrawable()
+                            isShow = true
+                        } else if (isShow) {
+                            toolbar.setBackgroundResource(0)
+                            isShow = false
+                        }
+                    }
+                })
+
+                textViewNumber.text = "#${it.id.toString().padStart(3, '0')}"
                 textViewInfo.text = "Is mythical: " + it.is_mythical
                 textViewLegendary.text = "Is legendary: " + it.is_legendary
-                textViewLegendary.text = byteArray.size.toString()
+                val rate = ((it.capture_rate ?: 0) / 2.55).toFloat()
+                textViewCaptureRate.text = "${rate}%"
+                progressBarCapture.progress = rate.toInt()
+                val gender = (((it.gender_rate ?: 0).toFloat() * 100) / 8)
+                progressBarGender.progress = gender.toInt()
+                textViewMale.text = "${gender}%"
+                textViewFemale.text = "${100 - gender}%"
                 pokemonDB = PokemonModel(
                     id = it.id.toLong(),
                     name = it.name,
@@ -176,31 +228,15 @@ class PokemonFragment : Fragment(R.layout.fragment_focus_pokemon) {
                     if (item != null) {
                         viewModel.deletePokemonDB(pokemonDB)
                     } else {
-                        viewModel.addSprite(SpriteDBEntity(pokemonEntityId = pokemonDB.id, sprite = byteArray.last()))
+                        viewModel.addSprite(
+                            SpriteDBEntity(
+                                pokemonEntityId = pokemonDB.id,
+                                sprite = byteArray.last()
+                            )
+                        )
                         viewModel.addPokemonDB(pokemonDB)
 
                     }
-                    /*
-                    Toast.makeText(requireContext(),pokemonDB.name,Toast.LENGTH_LONG).show()
-                    viewModel.getPokemonsDB()
-                    viewModel.pokemonsDBLiveData.observe(viewLifecycleOwner) { pokemons ->
-                        item = pokemons.find {
-                            it.id == pokemonDB.id
-                        }
-                        binding.textViewInfo.text = item.toString()
-                        if (item != null) {
-                            Toast.makeText(requireContext(),pokemonDB.name+" удалён",Toast.LENGTH_SHORT).show()
-                            viewModel.deletePokemonDB(pokemonDB)
-                        } else {
-                            Toast.makeText(requireContext(),pokemonDB.name+" сохранён",Toast.LENGTH_SHORT).show()
-                            viewModel.addPokemonDB(pokemonDB)
-                        }
-                    }
-
-                     */
-
-
-
                     true
                 }
             }

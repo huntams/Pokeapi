@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "546824684604",
+    "project_id": "pokeapi-bed87",
+    "storage_bucket": "pokeapi-bed87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546824684604:android:fa8f11b0f3abf55a526f39",
+        "android_client_info": {
+          "package_name": "com.example.pokeapi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546824684604-2s9bpm2n09fgb5i8ov8ef99ien92jd0i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pokeapi",
+            "certificate_hash": "ac76dd45319e46b343ab0b2250e812252368519b"
+          }
+        },
+        {
+          "client_id": "546824684604-j6ilav45q3fu3shm5t1t8jloii0fj4i6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcMw8n0eahcMQXp6lWSAeNh12gdM1q9zw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546824684604-j6ilav45q3fu3shm5t1t8jloii0fj4i6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

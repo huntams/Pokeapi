@@ -61,6 +61,12 @@ class PokeFavouriteRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getPokemonWithSprites(data: Long): Flow<PokemonWithSpritesModel> {
+        return pokeDAO.getPokemonWithSprites(data).map { entity->
+                pokemonMapper.fromSpritesEntityToUIModel(entity)
+        }
+    }
+
     override fun getPokemon(data: Long): Flow<Any?> {
         return pokeDAO.getPokemon(data).map { entity ->
             entity ?: entity?.also {

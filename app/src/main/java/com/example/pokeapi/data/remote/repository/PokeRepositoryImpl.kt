@@ -6,13 +6,16 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.pokeapi.data.mappers.PokemonMapper
 import com.example.pokeapi.data.mappers.PokemonSpeciesMapper
+import com.example.pokeapi.data.mappers.TypeMapper
 import com.example.pokeapi.data.model.Pokemon
 import com.example.pokeapi.data.model.PokemonSpecies
+import com.example.pokeapi.data.model.TypePokemon
 import com.example.pokeapi.data.pagging.EvolutionsPagingSource
 import com.example.pokeapi.data.pagging.PokemonPagingSource
 import com.example.pokeapi.data.remote.PokeApiService
 import com.example.pokeapi.data.remote.model.ApiPokemonColor
 import com.example.pokeapi.data.remote.model.ApiResource
+import com.example.pokeapi.data.remote.model.ApiType
 import com.example.pokeapi.data.remote.model.EvolutionChain
 import com.example.pokeapi.data.remote.model.NamedAPIResource
 import kotlinx.coroutines.flow.Flow
@@ -23,7 +26,12 @@ class PokeRepositoryImpl @Inject constructor(
     private val apiService: PokeApiService,
     private val pokemonMapper: PokemonMapper,
     private val pokemonSpeciesMapper: PokemonSpeciesMapper,
+    private val typeMapper: TypeMapper,
 ) : PokeRepository{
+    override suspend fun getTypeByName(Name: String): TypePokemon {
+        return typeMapper.fromModelToUi(apiService.getTypeByName(Name))
+    }
+
     override suspend fun getPokemons(): Flow<PagingData<NamedAPIResource>> {
         return Pager(
             config = PagingConfig(20, enablePlaceholders = false),

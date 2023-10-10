@@ -15,6 +15,7 @@ interface PokeFavouriteRepository {
     fun getPokemon(data: Long): Flow<Any?>
 
     fun getPokemonsWithSprites(): Flow<List<PokemonWithSpritesModel>>
+    fun getPokemonWithSprites(data: Long): Flow<PokemonWithSpritesModel>
     fun filterPokemons(data: String): Flow<List<PokemonModel>>
 
     suspend fun addPokemon(pokemonModel: PokemonModel)

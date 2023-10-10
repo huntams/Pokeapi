@@ -41,11 +41,12 @@ class PokemonsPagingAdapter @Inject constructor() :
             }
         fun bind(item: NamedAPIResource) {
 
+            val number = item.url
+                .substringAfter("pokemon")
+                .replace("/", "")
+                .padStart(3, '0')
             val url = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/" +
-                    item.url
-                        .substringAfter("pokemon")
-                        .replace("/", "")
-                        .padStart(3, '0') +
+                    number +
                     ".png"
 
 
@@ -54,7 +55,8 @@ class PokemonsPagingAdapter @Inject constructor() :
                     placeholder(R.drawable.ic_pokemon)
                 }
 
-                textViewNumber.text = item.name
+                textViewNumber.text = "#$number"
+                textViewName.text  = item.name
 
 
                 root.setOnClickListener {

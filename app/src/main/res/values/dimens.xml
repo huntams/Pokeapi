@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="pokemon_image_size">64dp</dimen>
+    <dimen name="itemPokemonImage">126dp</dimen>
+    <dimen name="icon_pokemon_type">18dp</dimen>
 </resources>

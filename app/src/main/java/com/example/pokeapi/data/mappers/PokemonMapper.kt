@@ -61,5 +61,8 @@ class PokemonMapper @Inject constructor() {
         name = apiPokemon.name,
         sprites = apiPokemon.sprites,
         location_area_encounters = apiPokemon.location_area_encounters,
+        height = apiPokemon.height,
+        weight = apiPokemon.weight,
+        types = apiPokemon.types,
     )
 }

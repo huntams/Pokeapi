@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="horizontal"
+    style="@style/Widget.Material3.CardView.Filled"
+    app:cardCornerRadius="64dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageViewRounded"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_margin="10dp"
+            android:padding="4dp"
+            android:background="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:shapeAppearance="@style/RoundedImage"/>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageViewType"
+            android:layout_width="@dimen/icon_pokemon_type"
+            android:layout_height="@dimen/icon_pokemon_type"
+            app:layout_constraintTop_toTopOf="@+id/imageViewRounded"
+            app:layout_constraintStart_toStartOf="@+id/imageViewRounded"
+            app:layout_constraintEnd_toEndOf="@+id/imageViewRounded"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewRounded"
+            android:src="@drawable/ic_grass_24"
+            app:shapeAppearance="@style/RoundedImage"/>
+
+        <TextView
+            android:id="@+id/textViewType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingEnd="14dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toEndOf="@+id/imageViewRounded"
+            tools:text="test"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

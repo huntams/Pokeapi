@@ -2,30 +2,41 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:layout_margin="8dp"
-    app:cardElevation="@dimen/pokemon_image_size"
-    android:background="@color/black">
+    android:orientation="horizontal"
+    style="@style/Widget.Material3.CardView.Filled"
+    app:cardCornerRadius="8dp">
 
 
     <ImageView
         android:id="@+id/imageViewPokemon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/avatars"
-        android:layout_gravity="top"/>
+        android:layout_width="@dimen/itemPokemonImage"
+        android:layout_height="@dimen/itemPokemonImage"
+        android:scaleType="centerCrop"
+        android:layout_gravity="end"
+        android:background="@drawable/ic_pokeball_48"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textViewNumber"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom"
+        android:layout_gravity="top|center_horizontal"
+        android:padding="16dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        />
+        tools:text="test" />
 
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
+        android:gravity="start|center"
+        android:paddingStart="16dp"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        tools:text="tett" />
 
 
 </com.google.android.material.card.MaterialCardView>

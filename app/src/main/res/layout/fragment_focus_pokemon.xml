@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
@@ -23,28 +23,19 @@
                 android:adjustViewBounds="true"
                 android:fitsSystemWindows="true"
                 android:orientation="horizontal"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:listitem="@layout/item_image_pokemon" />
 
-            <TextView
-                android:id="@+id/textViewNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:paddingHorizontal="8dp"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                android:textColor="@color/black"
-                tools:text="#001" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
                 app:menu="@menu/fav_pokemon_menu"
-                app:layout_collapseMode="pin" />
+                app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -58,47 +49,251 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <TextView
-                android:id="@+id/textViewName"
+                android:id="@+id/textViewNumber"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="#001" />
+
+            <TextView
+                android:id="@+id/textViewType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/type"
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewType"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_type_pokemon" />
+
+
             <TextView
                 android:id="@+id/textViewInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="random"
-                android:textAppearance="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-                android:textSize="12sp"
+                android:layout_marginTop="24dp"
+                android:elevation="4dp"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewName" />
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewType"
+                tools:text="random" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/dividerInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewInfo" />
+
+            <TextView
+
+                android:id="@+id/buttonWeightText"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/weight"
+                app:drawableStartCompat="@drawable/ic_weight_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dividerInfo" />
+
+            <Button
+                android:id="@+id/buttonWeightNumber"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                app:layout_constraintEnd_toStartOf="@id/buttonHeightNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonWeightText"
+                tools:text="test" />
+
+            <TextView
+                android:id="@+id/buttonHeightText"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/height"
+                app:drawableStartCompat="@drawable/ic_height_24"
+                app:layout_constraintBottom_toTopOf="@id/buttonHeightNumber"
+                app:layout_constraintStart_toEndOf="@id/buttonWeightNumber"
+                app:layout_constraintTop_toBottomOf="@+id/dividerInfo" />
+
+            <Button
+                android:id="@+id/buttonHeightNumber"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/buttonWeightNumber"
+                app:layout_constraintTop_toBottomOf="@+id/buttonWeightText" />
+
+            <TextView
+                android:id="@+id/textViewCapture"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/capture"
+                app:layout_constraintBottom_toTopOf="@+id/progressBarCapture"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/buttonWeightNumber" />
+
+            <ProgressBar
+                android:id="@+id/progressBarCapture"
+                style="@style/Widget.Material3.LinearProgressIndicator"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="12dp"
+                android:progressDrawable="@drawable/custom_progress_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewCapture" />
+
+            <TextView
+                android:id="@+id/textViewCaptureRate"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBarCapture"
+                tools:text="69%" />
+
+            <TextView
+                android:id="@+id/textViewGender"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/gender"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewCaptureRate" />
+
+            <ProgressBar
+                android:id="@+id/progressBarGender"
+                style="@style/Widget.Material3.LinearProgressIndicator"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="12dp"
+                android:progressDrawable="@drawable/custom_progress_bar"
+                android:secondaryProgress="100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewGender" />
+
+            <TextView
+                android:id="@+id/textViewMale"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:drawableStartCompat="@drawable/ic_male_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBarGender" />
+
+            <TextView
+                android:id="@+id/textViewFemale"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:drawableStartCompat="@drawable/ic_female_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBarGender" />
 
             <TextView
                 android:id="@+id/textViewLegendary"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="random"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewInfo" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewMale" />
+
+            <TextView
+                android:id="@+id/textViewWeaknesses"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/weaknesses"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewLegendary" />
+
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewEvolution"
+                android:id="@+id/recyclerViewWeaknesses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewLegendary"
-                tools:listitem="@layout/item_evolution_pokemon" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewWeaknesses"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_type_pokemon" />
+
+            <TextView
+                android:id="@+id/textViewEvolution"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/evolution"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWeaknesses" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewEvolution">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewEvolution"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                    tools:listitem="@layout/item_evolution_pokemon" />
+
+            </com.google.android.material.card.MaterialCardView>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

@@ -19,6 +19,10 @@ interface PokeDAO {
     @Query("SELECT * FROM Pokemons")
     fun getPokemonsWithSprites(): Flow<List<PokemonWithSprites>>
 
+    @Transaction
+    @Query("SELECT * FROM Pokemons WHERE poke_id LIKE :data")
+    fun getPokemonWithSprites(data: Long): Flow<PokemonWithSprites>
+
     @Insert
     suspend fun addSprites(spriteDBEntity: SpriteDBEntity)
 

@@ -2,6 +2,7 @@ package com.example.pokeapi.presentation.pokemon
 
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,6 +26,7 @@ class PokemonsFragment : Fragment(R.layout.fragment_recycler_menu) {
 
     @Inject
     lateinit var pokemonImageAdapter: PokemonImageAdapter
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -76,7 +78,6 @@ class PokemonsFragment : Fragment(R.layout.fragment_recycler_menu) {
              */
         }
         binding.recyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
             adapter = pokemonsPagingAdapter
 
         }

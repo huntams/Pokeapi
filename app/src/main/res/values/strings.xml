@@ -4,4 +4,11 @@
     <string name="evolutions">Evolutions</string>
     <string name="pokemons">Pokemons</string>
     <string name="your_pokemons">Your pokemons</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="gender">Gender</string>
+    <string name="type">Type</string>
+    <string name="capture">Capture</string>
+    <string name="weaknesses">Weaknesses</string>
+    <string name="evolution">Evolution</string>
 </resources>

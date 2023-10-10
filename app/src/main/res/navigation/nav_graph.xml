@@ -14,7 +14,11 @@
             app:nullable="false" />
         <action
             android:id="@+id/action_pokemonsFragment_to_pokemonFragment"
-            app:destination="@id/nav_pokemonFragment" />
+            app:destination="@id/nav_pokemonFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/nav_pokemonFragment"
@@ -31,5 +35,25 @@
     <fragment
         android:id="@+id/nav_favouritePokemonsFragment"
         android:name="com.example.pokeapi.presentation.favourite.FavouritePokemonsFragment"
-        android:label="FavouritePokemonsFragment" />
+        android:label="FavouritePokemonsFragment" >
+        <action
+            android:id="@+id/action_nav_favouritePokemonsFragment_to_favouritePokemonFragment"
+            app:destination="@id/favouritePokemonFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="pokemonId"
+            app:argType="long"
+            android:defaultValue="1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouritePokemonFragment"
+        android:name="com.example.pokeapi.presentation.favourite.FavouritePokemonFragment"
+        android:label="FavouritePokemonFragment" >
+        <argument
+            android:name="pokemonId"
+            app:argType="long" />
+    </fragment>
 </navigation>
